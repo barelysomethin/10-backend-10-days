@@ -1,23 +1,18 @@
 import { Router } from "express";
-
+import { getAlltodos, gettodobyid, createTodo } from "./controller.js";
 const router = Router();
 
-router.get('/',(req,res)=>{
-    res.send('here will be all notes')
-})
+router.get("/", getAlltodos);
 
-router.get('/:id',(req,res)=>{
-    res.send(`here will be note with id ${req.params.id}`)
-})
+router.get("/:id", gettodobyid);
 
-router.post('/',(req,res)=>{
-    res.send('note created')
-})
-router.put('/:id', (req,res)=>{
-    res.send('note will be updated')
-})
-router.delete('/:id', (req,res)=>{
-    res.send('note will be deleted')
-})
+router.post("/create", createTodo);
+
+router.put("/:id", (req, res) => {
+  res.send("todo will be updated");
+});
+router.delete("/:id", (req, res) => {
+  res.send("todo will be deleted");
+});
 
 export default router;
