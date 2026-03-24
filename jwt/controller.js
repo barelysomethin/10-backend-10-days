@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import { configDotenv } from "dotenv";
+configDotenv();
 const users = [];
 
 const signup = async (req, res) => {
@@ -12,12 +13,12 @@ const signup = async (req, res) => {
     password: hashedpassword,
   };
   users.push(user);
-  res.json("user created", user);
+  res.json({message: "user created", user, users});
 };
 
 const login = async (req, res) => {
   const { username, password } = req.body;
-  const founduser = users.find((user) => user.username === username);
+  const founduser = users.find(user => user.username === username);
   if (founduser) {
     const match = await bcrypt.compare(password, founduser.password);
     if (match) {
@@ -25,6 +26,11 @@ const login = async (req, res) => {
       res.json({ token, founduser });
     }
   }
+  else{
+    res.json({message: "error occured"})
+  }
 };
+
+console.log(users);
 
 export { signup, login };
